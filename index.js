@@ -1,20 +1,22 @@
 'use strict';
 var
   exec = require("child_process").exec,
-  ssh = require("git-repo-url").ssh;
+  ssh = require("git-repo-url").ssh,
+  path = require('path');
 
 function remote(username, reponame, cb) {
 
+  if (typeof username !== 'string') {
+    throw new Error('username should be string');
+  }
+
+  if (typeof reponame === 'function') {
+    cb = reponame;
+    reponame = path.basename(process.cwd());
+  }
+
   if (typeof cb !== "function") {
     throw new Error("callback should be function")
-  }
-
-  if (username === undefined) {
-    throw new Error("username is required");
-  }
-
-  if (reponame === undefined) {
-    throw new Error("reponame is required");
   }
 
   var prefix = "git remote add origin ";

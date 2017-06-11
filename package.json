@@ -1,6 +1,6 @@
 {
   "name": "git-remote-add",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Add local github repository to remote repository",
   "bugs": {
     "url": "yashprit/git-remote-add/issues"

@@ -1,6 +1,6 @@
 'use strict';
 var
-  exec = require("child_process").exec,
+  exec = require("shelljs").exec,
   ssh = require("git-repo-url").ssh,
   path = require('path');
 
@@ -22,13 +22,14 @@ function remote(username, reponame, cb) {
   var prefix = "git remote add origin ";
   var url = ssh(username, reponame);
   var command = prefix + url;
-  exec(command, function(err, status) {
-    if (err) {
-      cb(err);
-      return;
-    }
+
+  const { stdout, stderr, code } = exec(command, { silent: true });
+
+  if(stderr) {
+    cb(stderr, null);
+  } else {
     cb(null, true);
-  });
+  }
 };
 
 module.exports = remote;
